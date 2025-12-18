@@ -24,15 +24,15 @@ app.get('/game', (req, res) => {
 // 3. THE "POST" ROUTE (Update data)
 // When a player clicks a square, the frontend sends a "POST" message.
 app.post('/move', (req, res) => {
-    const { sqClicked } = req.body; // Which square (0-8) was clicked?
+    const index = Number(req.body.index); // Which square (0-8) was clicked?
 
     // Logic Check: If the game is won or the square is full, ignore the click.
-    if (gameState.winner || gameState.board[sqClicked]) {
+    if (gameState.winner || gameState.board[index]) {
         return res.status(400).json({ message: "Invalid Move" });
     }
 
     // Update the board
-    gameState.board[sqClicked] = gameState.isXNext ? 'X' : 'O';
+    gameState.board[index] = gameState.isXNext ? 'X' : 'O';
     
     // Switch the turn
     gameState.isXNext = !gameState.isXNext;
